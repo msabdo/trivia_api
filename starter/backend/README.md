@@ -72,11 +72,15 @@ This README is missing documentation of your endpoints. Below is an example for 
 
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+DELETE '/questions/<int:question_id>'
+POST '/questions'
+POST '/questions_search'
+GET /categories/<int:cat_id>/questions'
+POST '/quizzes'
 
-GET '/categories'
+
+ GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
@@ -87,8 +91,194 @@ GET '/categories'
 '5' : "Entertainment",
 '6' : "Sports"}
 
-```
 
+GET '/questions'
+- handles GET requests for questions, including pagination (every 10 questions). 
+- Request Arguments: starter page number
+- Returns: a list of questions, number of total questions, current category, categories.
+
+[
+    [
+        {
+            "answer": "answer 1",
+            "category": "history",
+            "difficulty": 6,
+            "id": 7,
+            "question": "question history 1 ?"
+        },
+        {
+            "answer": "answer 2",
+            "category": "history",
+            "difficulty": 9,
+            "id": 8,
+            "question": "question history 2 ?"
+        },
+        {
+            "answer": "answer 1",
+            "category": "music",
+            "difficulty": 9,
+            "id": 9,
+            "question": "question music 1 ?"
+        },
+        {
+            "answer": "answer 2",
+            "category": "music",
+            "difficulty": 5,
+            "id": 10,
+            "question": "question music 2 ?"
+        },
+        {
+            "answer": "answer 1",
+            "category": "math",
+            "difficulty": 7,
+            "id": 4,
+            "question": "question math 1 ?"
+        },
+        {
+            "answer": "answer 2",
+            "category": "math",
+            "difficulty": 6,
+            "id": 5,
+            "question": "question math 2 ?"
+        }],
+
+    [
+        {
+            "type": "science"
+        },
+        {
+            "type": "music"
+        },
+        {
+            "type": "math"
+        },
+        {
+            "type": "history"
+        }
+    ],
+    {
+        "totalQuestions": 10
+    }
+]
+
+DELETE '/questions/<int:question_id>'
+
+- DELETEs question using a question ID.
+- Request Arguments: The question ID needed to delete.
+- Returns: return  id of deleted question.
+
+{
+    "id": 14
+}
+
+
+POST '/questions'
+- Create  new question.
+- Request Arguments: require the question and answer text, category, and difficulty score.
+    {
+        "answer": "answer 12",
+        "category": "music",
+        "difficulty": 7,
+        "question": "question history 12?"
+    }
+
+- Returns: return assertion for success if succeded.
+
+{
+    "success": true
+}
+
+
+POST '/questions_search'
+- gets questions based on a search term. 
+- Request Arguments: search substring 'searchTerm'.
+    {
+	"searchTerm":"1"
+    }
+
+- Returns: returns any questions for whom the search term  is a substring of the question.
+[
+    {
+        "answer": "answer 1",
+        "category": "history",
+        "difficulty": 6,
+        "id": 7,
+        "question": "question history 1 ?"
+    },
+    {
+        "answer": "answer 1",
+        "category": "music",
+        "difficulty": 9,
+        "id": 9,
+        "question": "question music 1 ?"
+    },
+    {
+        "answer": "answer 1",
+        "category": "math",
+        "difficulty": 7,
+        "id": 4,
+        "question": "question math 1 ?"
+    }
+]
+
+
+GET /categories/<int:cat_id>/questions'
+- get questions based on category. 
+- Request Arguments: category id .
+- Returns: return all questions that belong to this category.
+[
+    {
+        "answer": "answer 1",
+        "category": "history",
+        "difficulty": 6,
+        "id": 7,
+        "question": "question history 1 ?"
+    },
+    {
+        "answer": "answer 2",
+        "category": "history",
+        "difficulty": 9,
+        "id": 8,
+        "question": "question history 2 ?"
+    },
+    {
+        "answer": "answer 8",
+        "category": "history",
+        "difficulty": 5,
+        "id": 22,
+        "question": "question history 8?"
+    }
+]
+
+
+
+POST '/quizzes'
+- gets questions to play the quiz. This endpoint should take category and previous question parameters. 
+- Request Arguments: takes category and previous question parameters. 
+{
+	"quiz_category":"history",
+	"previous_questions":
+	[
+	    {
+	        "answer": "answer 1",
+	        "category": "history",
+	        "difficulty": 6,
+	        "id": 7,
+	        "question": "question history 1 ?"
+	    }
+	    
+	]
+}
+
+- Returns: return a random questions within the given category.if provided, and that is not one of the previous questions.
+
+{
+    "answer": "answer 2",
+    "category": "history",
+    "difficulty": 9,
+    "id": 8,
+    "question": "question history 2 ?"
+}
 
 ## Testing
 To run the tests, run

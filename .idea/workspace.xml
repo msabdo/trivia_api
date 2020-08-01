@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe539cd9-f207-4a41-830d-9e4785d93270" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/02_trivia_api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/02_trivia_api.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/backend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starter/backend/flaskr/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/flaskr/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starter/backend/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/backend/test_flaskr.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/test_flaskr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/frontend/src/components/QuestionView.js" beforeDir="false" afterPath="$PROJECT_DIR$/starter/frontend/src/components/QuestionView.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,18 +92,26 @@
       <option name="project" value="LOCAL" />
       <updated>1596077112320</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="end points implementation">
+      <created>1596235194895</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1596235194902</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The first commit by the starter code" />
-    <option name="LAST_COMMIT_MESSAGE" value="The first commit by the starter code" />
+    <MESSAGE value="end points implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="end points implementation" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1596077109950">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1596235192564">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1596077109950" />
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1596235192564" />
     <state x="463" y="110" key="FileChooserDialogImpl" timestamp="1596077046978">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -123,10 +132,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state width="1345" height="174" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1596109127284" />
-    <state x="275" y="101" key="Vcs.Push.Dialog.v2" timestamp="1596077133667">
+    <state x="275" y="101" key="Vcs.Push.Dialog.v2" timestamp="1596235203123">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="101" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1596077133667" />
+    <state x="275" y="101" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1596235203123" />
     <state x="379" y="192" key="com.intellij.ide.util.TipDialog" timestamp="1596076006879">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

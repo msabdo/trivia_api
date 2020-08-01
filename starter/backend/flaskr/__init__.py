@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
@@ -41,10 +41,11 @@ def create_app(test_config=None):
         categories = Category.query.all()
         for cat in categories:
             category_list.append({
+                'id': cat.id,
                 'type': cat.type
                 })
                
-        return jsonify( category_list ) 
+        return make_response(jsonify( category_list ) ,200)
 
     '''
     @TODO:                                                 ######## done #
@@ -58,9 +59,9 @@ def create_app(test_config=None):
     ten questions per page and pagination at the bottom of the screen for three pages.
     Clicking on the page numbers should update the questions. 
     ''' 
-    @app.route('/questions/<int:page>')
-    def getPage_questions(page):
-        
+    @app.route('/questions')
+    def getPage_questions():
+        page = request.args.get('page')
         questions = Question.query.paginate(page=page, per_page=10).items
         category = Category.query.all()
         category_list = []
@@ -73,11 +74,12 @@ def create_app(test_config=None):
         for ques in questions:
             questions_list.append(ques.format())
 
-        return jsonify(
-            questions_list, 
-            category_list,
-            {'totalQuestions': total_questions}
-            )
+        return make_response(
+            jsonify(
+                questions_list, 
+                category_list,
+                {'totalQuestions': total_questions}
+            ),200)
 
     '''
     @TODO:                                              #####  done ###
@@ -89,12 +91,15 @@ def create_app(test_config=None):
     @app.route('/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
         try:
-            Question.query.get(question_id).delete()
-            db.session.commit()
-            return jsonify({"description": "success"})
+            ques = Question.query.get(question_id)
+            if ques != None:
+                ques.delete()
+                return make_response(jsonify({"id": question_id}),200)
+            else:
+                return   make_response(jsonify(description='already deleted'),404)   
 
         except:
-            abort(417,description="Expectation field not deleted")
+            abort(500, description=" not deleted")
     '''
     @TODO:                                  #### done ###
     Create an endpoint to POST a new question, 
@@ -116,7 +121,7 @@ def create_app(test_config=None):
                 difficulty = data['difficulty'])
             db.session.add(question)
             db.session.commit()
-            return jsonify({"description": "success"})
+            return make_response(jsonify(success=True),200)
         except:
             abort(417, description="faild")        
         
@@ -135,13 +140,13 @@ def create_app(test_config=None):
     def question_search():
 
         questions = []
-        search_data = request.get_json()['query']
+        search_data = request.get_json()['searchTerm']
         questions_list = Question.query.all()
         for ques in questions_list:
-            if ques.question.lower().find(search_data) >= 0:
+            if search_data.lower() in ques.question.lower() :
                 questions.append(ques.format()) 
 
-        return jsonify(questions)    
+        return make_response(jsonify(questions), 200)    
 
 
     '''
@@ -155,13 +160,12 @@ def create_app(test_config=None):
     @app.route('/categories/<int:cat_id>/questions') 
     def category_questions(cat_id):
         questions_list  = []
-        questions= Question.query.all()
-        category = Category.query.get(cat_id)
+        categ = Category.query.get(cat_id).type
+        questions = Question.query.filter_by(category=categ).all()
         for ques in questions:
-            if ques.category == category.type:
-                questions_list.append(ques.format())
+            questions_list.append(ques.format())
 
-        return jsonify(questions_list)
+        return make_response(jsonify(questions_list), 200)
 
 
     '''
@@ -178,21 +182,37 @@ def create_app(test_config=None):
     @app.route('/quizzes', methods=["POST"])
     def quizzes():
         
-        ids = []
+        pre_ids = []
+        current_ids = []
+        rand_num = 0
         data = request.get_json()
         previous_questions = data["previous_questions"]
         for ques in previous_questions:
-            ids.append(ques['id'])
+            pre_ids.append(ques['id'])
 
         quiz_category = data['quiz_category']
-        questions = Question.query.all()
+        category_questions = Question.query.filter_by(category=quiz_category).all()
+        if len(category_questions) == 0 :
+            return make_response(jsonify(
+                    success=False
+                    ),404)
+        else:    
+            for ques in category_questions:
+                current_ids.append(ques.id)
+
+        rand_num = random.choice(current_ids)
+
+        while True:
+            if rand_num not in pre_ids:
+                rand_question = Question.query.get(rand_num)
+                if (rand_question != None):
+                    return make_response(jsonify(rand_question.format()), 200) 
+                else:
+                    return       
+            else:
+                return make_response(jsonify(success=False), 404 )   
         
-        for ques in questions:
-            if (ques.id not in ids) and (ques.category == quiz_category):
-            
-                return jsonify(ques.format())
-        
-        abort(417, description="faild")  
+        abort(500, description="faild")  
     '''
     @TODO: 
     Create error handlers for all expected errors 
@@ -214,6 +234,6 @@ def create_app(test_config=None):
             "message": "Not processable entity"
             }), 422
 
-            
+
     return app
 
