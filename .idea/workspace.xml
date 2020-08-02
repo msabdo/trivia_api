@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe539cd9-f207-4a41-830d-9e4785d93270" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/starter/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/backend/flaskr/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/flaskr/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/backend/test_flaskr.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/test_flaskr.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,20 +106,28 @@
       <option name="project" value="LOCAL" />
       <updated>1596287617383</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="after second review and update it">
+      <created>1596322412882</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1596322412883</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The first commit by the starter code" />
     <MESSAGE value="end points implementation" />
     <MESSAGE value="after review and update it" />
-    <option name="LAST_COMMIT_MESSAGE" value="after review and update it" />
+    <MESSAGE value="after second review and update it" />
+    <option name="LAST_COMMIT_MESSAGE" value="after second review and update it" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1596287614869">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1596322409711">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1596287614869" />
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1596322409711" />
     <state x="463" y="110" key="FileChooserDialogImpl" timestamp="1596077046978">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -136,10 +148,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state width="1345" height="174" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1596287665702" />
-    <state x="275" y="101" key="Vcs.Push.Dialog.v2" timestamp="1596287629571">
+    <state x="275" y="101" key="Vcs.Push.Dialog.v2" timestamp="1596322420401">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="101" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1596287629571" />
+    <state x="275" y="101" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1596322420401" />
     <state x="379" y="192" key="com.intellij.ide.util.TipDialog" timestamp="1596076006879">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

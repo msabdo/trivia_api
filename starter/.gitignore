@@ -6,7 +6,7 @@ venv
 ######################
 .DS_Store
 .DS_Store?
-._*
+.node_modules
 .Spotlight-V100
 .Trashes
 ehthumbs.db

@@ -38,14 +38,11 @@ def create_app(test_config=None):
     '''
     @app.route('/categories')
     def getAll_categories():
-        category_list = []
+        category_list = {}
         categories = Category.query.all()
         if categories is not None:
             for cat in categories:
-                category_list.append({
-                    'id': cat.id,
-                    'type': cat.type
-                })
+                category_list[cat.id] = cat.type     
             return make_response(jsonify(category_list), 200)
         else:
             return make_response(jsonify(success=False), 404)
@@ -66,12 +63,12 @@ def create_app(test_config=None):
     '''
     @app.route('/questions')
     def getPage_questions():
-        page = request.args.get('page')
+        page = request.args.get('page', 1, type=int)
         questions = Question.query.paginate(page=page, per_page=10).items
         category = Category.query.all()
         category_list = []
         for cat in category:
-            category_list.append({'type': cat.type})
+            category_list = {cat.id: cat.type}
 
         total_questions = len(questions)
         questions_list = []
@@ -104,7 +101,9 @@ def create_app(test_config=None):
                 )
 
         except:
-            abort(500, description=" not deleted")
+            return make_response(
+                    jsonify(description=" not deleted"), 400
+                )
     '''
     @TODO:                      #### done ###
     Create an endpoint to POST a new question,
@@ -124,11 +123,11 @@ def create_app(test_config=None):
                 answer=data['answer'],
                 category=data['category'],
                 difficulty=data['difficulty'])
-            db.session.add(question)
-            db.session.commit()
+            question.insert()
+
             return make_response(jsonify(success=True), 200)
         except:
-            abort(400, success=False)
+            return make_response(jsonify(success=False), 400)
 
     '''
     @TODO:                                        #####  done  ###
@@ -140,7 +139,7 @@ def create_app(test_config=None):
     only question that include that string within their question.
     Try using the word "title" to start.
     '''
-    @app.route('/questions_search', methods=['POST'])
+    @app.route('/questions/search', methods=['POST'])
     def question_search():
 
         questions = []
@@ -169,7 +168,7 @@ def create_app(test_config=None):
         questions_list = []
         categ = Category.query.get(cat_id)
         if categ is not None:
-            questions = Question.query.filter_by(category=categ.type).all()
+            questions = Question.query.filter_by(category=categ.id).all()
             for ques in questions:
                 questions_list.append(ques.format())
 
@@ -192,38 +191,41 @@ def create_app(test_config=None):
     @app.route('/quizzes', methods=["POST"])
     def quizzes():
 
-        pre_ids = []
-        current_ids = []
-        rand_num = 0
-        data = request.get_json()
-        previous_questions = data["previous_questions"]
-        for ques in previous_questions:
-            pre_ids.append(ques['id'])
+        try:
+            current_ids = []
+            rand_num = 0
+            data = request.get_json()
+            pre_question_list = data["previous_questions"]
 
-        quiz_category = data['quiz_category']
-        category_questions = Question.query.filter_by(
-            category=quiz_category).all()
-        if len(category_questions) == 0:
-            return make_response(jsonify(
-                success=False
-            ), 404)
-        else:
-            for ques in category_questions:
-                current_ids.append(ques.id)
-
-        rand_num = random.choice(current_ids)
-
-        while True:
-            if rand_num not in pre_ids:
-                rand_question = Question.query.get(rand_num)
-                if(rand_question is not None):
-                    return make_response(jsonify(rand_question.format()), 200)
-                else:
-                    return
+            quiz_category = data['quiz_category']
+            category_questions = Question.query.filter_by(
+                category=quiz_category['id']).all()
+            if len(category_questions) == 0:
+                return make_response(jsonify(
+                    success=False
+                ), 404)
             else:
-                return make_response(jsonify(success=False), 404)
+                for ques in category_questions:
+                    current_ids.append(ques.id)
 
-        abort(500, description="faild")
+            rand_num = random.choice(current_ids)
+
+            while True:
+                if rand_num not in pre_question_list:
+                    rand_question = Question.query.get(rand_num)
+                    if(rand_question is not None):
+                        return make_response(jsonify({
+                            'question': rand_question['question'],
+                            'answer': rand_question['answer'],
+                            'category': rand_question['category'],
+                            'difficulty':rand_question['difficulty']
+                        }), 200)
+                    else:
+                        return make_response(jsonify(success=False), 404)
+                else:
+                    return make_response(jsonify(success=False), 404)
+        except:
+            abort(500, description="faild")
     '''
     @TODO:
     Create error handlers for all expected errors
@@ -246,7 +248,7 @@ def create_app(test_config=None):
         }), 422
 
     @app.errorhandler(500)
-    def not_processable(error):
+    def internal_server_error(error):
         return jsonify({
             "success": False,
             "error": 500,
@@ -254,7 +256,7 @@ def create_app(test_config=None):
         }), 500
 
     @app.errorhandler(400)
-    def not_processable(error):
+    def bad_request(error):
         return jsonify({
             "success": False,
             "error": 400,
